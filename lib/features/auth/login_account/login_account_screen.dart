@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rumo/core/asset_images.dart';
+import 'package:rumo/core/widgets/custom_text_field.dart';
 import 'package:rumo/features/onboarding/routes/onboarding_routes.dart';
 
 class LoginAccountScreen extends StatelessWidget {
-  const LoginAccountScreen({super.key});
+  // antes era const
+  LoginAccountScreen({super.key});
+
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +98,85 @@ class LoginAccountScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,
                       vertical: 32,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Bem vindo (a) de volta!",
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff1E1E1E),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Preencha com os seus dados',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            color: Color(0xff1E1E1E),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 24),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            spacing: 16,
+                            children: [
+                              CustomTextField(hintText: 'E-mail'),
+                              CustomTextField(
+                                hintText: 'Senha',
+                                obscureText: true,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Campo inválido!';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 62),
+                        SizedBox(
+                          width: double.maxFinite,
+                          child: FilledButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                print('Formulário válido');
+                              } else {
+                                print('Formulário inválido');
+                              }
+                            },
+                            child: Text(
+                              'Entrar',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        SizedBox(
+                          child: Center(
+                            child: Text(
+                              'Esqueci minha senha',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontFamily: 'Inter',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

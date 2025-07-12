@@ -9,6 +9,6 @@ class AuthRoutes {
   // mesma coisa que o onboarding_routes
   static final Map<String, Widget Function(BuildContext)> routes = {
     createAccountScreen: (context) => const CreateAccountScreen(),
-    loginAccountSreen: (context) => const LoginAccountScreen(),
+    loginAccountSreen: (context) => LoginAccountScreen(),
   };
 }

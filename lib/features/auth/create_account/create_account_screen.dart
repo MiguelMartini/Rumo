@@ -98,21 +98,25 @@ class CreateAccountScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Cadastre-se",
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff1E1E1E),
-                        ),),
+                        Text(
+                          "Cadastre-se",
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff1E1E1E),
+                          ),
+                        ),
                         SizedBox(height: 10),
-                        Text('Preencha os dados abaixo para criar sua conta.',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xff1E1E1E),
-                        ),),
+                        Text(
+                          'Preencha os dados abaixo para criar sua conta.',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff1E1E1E),
+                          ),
+                        ),
                         const SizedBox(height: 24),
                         Form(
                           child: Column(
