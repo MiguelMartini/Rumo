@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rumo/core/asset_images.dart';
-import 'package:rumo/features/auth/routes/auth_routes.dart';
 import 'package:rumo/features/onboarding/routes/onboarding_routes.dart';
 
 class CreateAccountScreen extends StatelessWidget {
@@ -76,6 +75,7 @@ class CreateAccountScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      iconSize: 32,
                     ),
                     color: Color(0xFF383838),
                     icon: Icon(Icons.chevron_left),
