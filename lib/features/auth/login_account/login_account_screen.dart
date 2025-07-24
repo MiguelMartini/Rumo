@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rumo/core/asset_images.dart';
-import 'package:rumo/core/widgets/custom_text_field.dart';
+import 'package:rumo/features/auth/routes/auth_routes.dart';
 import 'package:rumo/features/onboarding/routes/onboarding_routes.dart';
+import 'package:rumo/features/profile/profile_screen.dart';
 
-class LoginAccountScreen extends StatelessWidget {
-  // antes era const
-  LoginAccountScreen({super.key});
+class LoginAccountScreen extends StatefulWidget {
+  const LoginAccountScreen({super.key});
 
+  @override
+  State<LoginAccountScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginAccountScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+    bool hidePassword = true;
+    bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -127,16 +134,34 @@ class LoginAccountScreen extends StatelessWidget {
                           child: Column(
                             spacing: 16,
                             children: [
-                              CustomTextField(hintText: 'E-mail'),
-                              CustomTextField(
-                                hintText: 'Senha',
-                                obscureText: true,
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Email',
+                                ),
+                                validator: (value){
+                                  if(value == null || value.isEmpty){
+                                    return 'Campo inválido';
+                                  }
+                                },
+                              ),
+                              TextFormField(
+                               decoration: InputDecoration(
+                                  hintText: 'Senha',
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        hidePassword = !hidePassword;
+                                      });
+                                    }, 
+                                    icon: Icon(hidePassword ? Icons.visibility_off : Icons.visibility))
+                                ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Campo inválido!';
+                                    return 'Senha incorreta';
                                   }
                                   return null;
                                 },
+                                obscureText: hidePassword,
                               ),
                             ],
                           ),
@@ -145,21 +170,41 @@ class LoginAccountScreen extends StatelessWidget {
                         SizedBox(
                           width: double.maxFinite,
                           child: FilledButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                print('Formulário válido');
-                              } else {
-                                print('Formulário inválido');
+                            onPressed: () async {
+                              final isValid =
+                              _formKey.currentState?.validate() ?? false;
+                              if(isValid){
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                await Future.delayed(Duration(seconds: 2),);
+                                setState(() {
+                                  isLoading = false;
+                                });
                               }
                             },
-                            child: Text(
-                              'Entrar',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                            child: Builder(
+                              builder: (context){
+                                if(isLoading){
+                                  return const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  );
+                                }else{
+                                  return const Text(
+                                    'Entrar',
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  );
+                                }
+                              }
+                              )
                           ),
                         ),
                         SizedBox(height: 16),
