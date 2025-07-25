@@ -321,7 +321,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         color: Colors.white,
                                       ),
                                     );
-                                  } else {
+                                  }  
                                     return Text(
                                       'Criar conta',
                                       style: TextStyle(
@@ -330,7 +330,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         fontWeight: FontWeight.w600,
                                       ),
                                     );
-                                  }
                                 },
                               ),
                             ),
