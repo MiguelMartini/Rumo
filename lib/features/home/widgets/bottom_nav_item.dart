@@ -4,36 +4,51 @@ import 'package:flutter_svg/svg.dart';
 class BottomNavItem extends StatelessWidget {
   final String icon;
   final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
+  final int currentSelectedIndex;
+  final int index;
+  final void Function(int index) onSelectItem;
+  const BottomNavItem({
+    required this.icon,
+    required this.label,
+    required this.currentSelectedIndex,
+    required this.index,
+    required this.onSelectItem,
+    super.key,
+  });
 
-
-  const BottomNavItem({required this.icon, required this.label, required this.isSelected, required this.onTap, super.key});
+  bool get isSelected => currentSelectedIndex == index;
 
   @override
   Widget build(BuildContext context) {
-    final selected = Color(0xFF4E61F6);
-    final unSelected = Color(0xff757575);
-
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            icon,
-            width: 20,
-            height: 20,
-            colorFilter: ColorFilter.mode(isSelected ? selected : unSelected, BlendMode.srcATop),
-          ),
-          Text(
-            label,
-            style: TextStyle(
-              color: isSelected ? selected : unSelected,
+    final activeColor = Theme.of(context).primaryColor;
+    final inactiveColor = Color(0xFF757575);
+    return InkWell(
+      onTap: () => onSelectItem(index),
+      borderRadius: BorderRadius.circular(24),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              icon,
+              width: 20,
+              height: 20,
+              colorFilter: ColorFilter.mode(
+                isSelected ? activeColor : inactiveColor,
+                BlendMode.srcATop,
+              ),
             ),
-          ),
-        ],
+            Text(
+              label,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 12,
+                color: isSelected ? activeColor : inactiveColor,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
