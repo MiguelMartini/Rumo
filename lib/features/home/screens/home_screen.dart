@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rumo/core/asset_images.dart';
+import 'package:rumo/features/diary/screens/user_diaries_screen.dart';
 import 'package:rumo/features/home/widgets/bottom_nav_item.dart';
+import 'package:rumo/features/user/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +14,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
 
+  void onSelectItem(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+  
+
   @override
   Widget build(BuildContext context) => Scaffold(
     resizeToAvoidBottomInset: false,
@@ -21,22 +29,19 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // BottomNavItem(icon: AssetImages.mapIcon, label: 'Mapa'),
           BottomNavItem(
             icon: AssetImages.mapIcon,
             label: 'Mapa',
-            isSelected: currentIndex == 0,
-            onTap: () => setState(() {
-              currentIndex = 0;
-            }),
+            currentSelectedIndex: currentIndex,
+            index: 0,
+            onSelectItem: onSelectItem,
           ),
           BottomNavItem(
             icon: AssetImages.diaryIcon,
             label: 'Diários',
-            isSelected: currentIndex == 1,
-            onTap: () => setState(() {
-              currentIndex = 1;
-            }),
+           currentSelectedIndex: currentIndex,
+            index: 1,
+            onSelectItem: onSelectItem,
           ),
           IconButton.filled(
             style: IconButton.styleFrom(backgroundColor: Color(0xFFDDE1FF)),
@@ -46,23 +51,32 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavItem(
             icon: AssetImages.exploreIcon,
             label: 'Explorar',
-            isSelected: currentIndex == 2,
-            onTap: () => setState(() {
-              currentIndex = 2;
-            }),
+            currentSelectedIndex: currentIndex,
+            index: 2,
+            onSelectItem: onSelectItem,
           ),
           BottomNavItem(
             icon: AssetImages.profileIcon,
             label: 'Perfil',
-            isSelected: currentIndex == 3,
-            onTap: () => setState(() {
-              currentIndex = 3;
-            }),
+             currentSelectedIndex: currentIndex,
+            index: 3,
+            onSelectItem: onSelectItem,
           ),
-          // BottomNavItem(icon: AssetImages.exploreIcon, label: 'Explorar'),
-          // BottomNavItem(icon: AssetImages.profileIcon, label: 'Perfil'),
         ],
       ),
+    ),
+    body: Builder(
+      builder: (context){
+        return switch (currentIndex) {
+          1 => UserDiariesScreen(),
+          2 => Center(child: Text('Explorar')),
+          3 => ProfileScreen(),
+          _ => Scaffold(
+            appBar: AppBar(title: Text('AppBar Mapa')),
+            body: Center(child: Text('Mapa')),
+          ),
+        };
+      }
     ),
   );
 }

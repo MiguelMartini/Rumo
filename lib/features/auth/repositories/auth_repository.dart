@@ -73,8 +73,6 @@ class AuthRepository {
   }
 }
 
-
-
 class AuthException implements Exception {
   final String code;
   final String? originalMessage;
@@ -84,14 +82,19 @@ class AuthException implements Exception {
 
   String getMessage() {
     switch (code) {
-      case "email-already-in-use":
+       case "email-already-in-use":
         return "Email já está em uso";
       case "invalid-email":
-        return "Não é um email válido";
+        return "Email não é válido";
       case "weak-password":
-        return "Senha fraca";
+        return "Sua senha é muito fraca. A senha deve conter no mínimo 6 caracteres";
+      case "user-not-found":
+        return "Usuário não encontrado";
+      case "INVALID_LOGIN_CREDENTIALS":
+      case "invalid-credential":
+        return "Seu usuário ou senha estão incorretos";
       default:
-        return "Sua senha deve conter mais de 6 caracteres";
+        return originalMessage ?? "Erro desconhecido";
     }
   }
 }

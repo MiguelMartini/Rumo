@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rumo/core/asset_images.dart';
 import 'package:rumo/features/auth/repositories/auth_repository.dart';
+import 'package:rumo/features/auth/widgets/forgot_password_dialog.dart';
 import 'package:rumo/features/home/routes/home_routes.dart';
-import 'package:rumo/features/onboarding/routes/onboarding_routes.dart';
 
 class LoginAccountScreen extends StatefulWidget {
   const LoginAccountScreen({super.key});
@@ -304,17 +304,16 @@ class _LoginScreenState extends State<LoginAccountScreen> {
                           SizedBox(
                             child: Center(
                               child: TextButton(
-                                onPressed: (){}, 
-                                child: Text(
-                                'Esqueci minha senha',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontFamily: 'Inter',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return ForgotPasswordDialog();
+                                    },
+                                  );
+                                },
+                                child: const Text('Esqueci minha senha'),
                               ),
-                                )
                             ),
                           ),
                         ],
