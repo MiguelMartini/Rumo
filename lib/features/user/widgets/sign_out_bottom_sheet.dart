@@ -50,34 +50,41 @@ class SignOutBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 32),
-          FilledButton(
+          Center(
+            child: Column(
+              children: [
+                FilledButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text("Permanecer na minha conta"),
+            child: SizedBox(
+              width: 345,
+              height: 30,
+              child: 
+              Center(child: Text("Permanecer na minha conta"))),
           ),
-          const SizedBox(height: 12),
-          Center(
-            child: TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Color(0xFFEE443F),
-                textStyle: TextStyle(
-                  fontFamily: 'Inter',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: Color(0xFFEE443F),
+                    textStyle: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    if (context.mounted) {
+                      Navigator.of(context).popUntil((_) => false);
+                      Navigator.pushNamed(
+                        context,
+                        OnboardingRoutes.onboardingScreen,
+                      );
+                    }
+                  },
+                  child: Text("Sair da minha conta"),
                 ),
-              ),
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                if (context.mounted) {
-                  Navigator.of(context).popUntil((_) => false);
-                  Navigator.pushNamed(
-                    context,
-                    OnboardingRoutes.onboardingScreen,
-                  );
-                }
-              },
-              child: Text("Sair da minha conta"),
+              ],
             ),
           ),
         ],
