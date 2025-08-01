@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rumo/core/asset_images.dart';
 import 'package:rumo/features/diary/screens/user_diaries_screen.dart';
+import 'package:rumo/features/user/widgets/create_diary_modal.dart';
 import 'package:rumo/features/home/widgets/bottom_nav_item.dart';
 import 'package:rumo/features/user/screens/profile_screen.dart';
+import 'package:rumo/features/user/widgets/sign_out_bottom_sheet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,64 +21,80 @@ class _HomeScreenState extends State<HomeScreen> {
       currentIndex = index;
     });
   }
-  
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    resizeToAvoidBottomInset: false,
-    bottomNavigationBar: BottomAppBar(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          BottomNavItem(
-            icon: AssetImages.mapIcon,
-            label: 'Mapa',
-            currentSelectedIndex: currentIndex,
-            index: 0,
-            onSelectItem: onSelectItem,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: Color(0xFFF3F3F3), width: 1)),
+        ),
+        child: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              BottomNavItem(
+                icon: AssetImages.mapIcon,
+                label: 'Mapa',
+                currentSelectedIndex: currentIndex,
+                index: 0,
+                onSelectItem: onSelectItem,
+              ),
+              BottomNavItem(
+                icon: AssetImages.diaryIcon,
+                label: 'Diários',
+                currentSelectedIndex: currentIndex,
+                index: 1,
+                onSelectItem: onSelectItem,
+              ),
+              IconButton.filled(
+                style: IconButton.styleFrom(backgroundColor: Color(0xFFDDE1FF)),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.9,
+                    ),
+                    builder: (context) => CreateDiaryModal(),
+                  );
+                },
+                iconSize: 28,
+                icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
+              ),
+              BottomNavItem(
+                icon: AssetImages.exploreIcon,
+                label: 'Explorar',
+                currentSelectedIndex: currentIndex,
+                index: 2,
+                onSelectItem: onSelectItem,
+              ),
+              BottomNavItem(
+                icon: AssetImages.profileIcon,
+                label: 'Perfil',
+                currentSelectedIndex: currentIndex,
+                index: 3,
+                onSelectItem: onSelectItem,
+              ),
+            ],
           ),
-          BottomNavItem(
-            icon: AssetImages.diaryIcon,
-            label: 'Diários',
-           currentSelectedIndex: currentIndex,
-            index: 1,
-            onSelectItem: onSelectItem,
-          ),
-          IconButton.filled(
-            style: IconButton.styleFrom(backgroundColor: Color(0xFFDDE1FF)),
-            onPressed: () {},
-            icon: Icon(Icons.add, color: Color(0xFF4E61F6), size: 20),
-          ),
-          BottomNavItem(
-            icon: AssetImages.exploreIcon,
-            label: 'Explorar',
-            currentSelectedIndex: currentIndex,
-            index: 2,
-            onSelectItem: onSelectItem,
-          ),
-          BottomNavItem(
-            icon: AssetImages.profileIcon,
-            label: 'Perfil',
-             currentSelectedIndex: currentIndex,
-            index: 3,
-            onSelectItem: onSelectItem,
-          ),
-        ],
+        ),
       ),
-    ),
-    body: Builder(
-      builder: (context){
-        return switch (currentIndex) {
-          1 => UserDiariesScreen(),
-          2 => Center(child: Text('Explorar')),
-          3 => ProfileScreen(),
-          _ => Scaffold(
-            appBar: AppBar(title: Text('AppBar Mapa')),
-            body: Center(child: Text('Mapa')),
-          ),
-        };
-      }
-    ),
-  );
+      body: Builder(
+        builder: (context) {
+          return switch (currentIndex) {
+            1 => UserDiariesScreen(),
+            2 => Center(child: Text('Explorar')),
+            3 => ProfileScreen(),
+            _ => Scaffold(
+              appBar: AppBar(title: Text('AppBar Mapa')),
+              body: Center(child: Text('Mapa')),
+            ),
+          };
+        },
+      ),
+    );
+  }
 }
