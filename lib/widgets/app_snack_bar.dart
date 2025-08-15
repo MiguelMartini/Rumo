@@ -1,13 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:rumo/theme/app_colors.dart';
 
 class AppSnackBar extends StatelessWidget {
   final Duration duration;
-
-
   const AppSnackBar({super.key, required this.duration});
 
-   @override
+  @override
   Widget build(BuildContext context) => SnackBar(
           content: Row(
             children: [

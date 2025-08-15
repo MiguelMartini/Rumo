@@ -52,7 +52,7 @@ class OnboardingScreen extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: () {
                       Navigator.pushNamed(
-                        context, AuthRoutes.loginAccountSreen);
+                        context, AuthRoutes.loginScreen);
                     },
                     child: Text(
                       'Entrar',
@@ -82,7 +82,7 @@ class OnboardingScreen extends StatelessWidget {
                   BlendMode.srcATop),
                 ),
                 SizedBox(height: 52),
-                Image.asset(AssetImages.onboarding),
+                Image.asset(AssetImages.onboardingCharacter),
               ],
             ),
           ),

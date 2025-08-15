@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rumo/core/asset_images.dart';
 import 'package:rumo/features/diary/screens/user_diaries_screen.dart';
-import 'package:rumo/features/user/widgets/create_diary_modal.dart';
 import 'package:rumo/features/home/widgets/bottom_nav_item.dart';
 import 'package:rumo/features/user/screens/profile_screen.dart';
-import 'package:rumo/features/user/widgets/sign_out_bottom_sheet.dart';
+import 'package:rumo/features/diary/widgets/create_diary_bottom_sheet/create_diary_bottom_sheet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,19 +30,20 @@ class _HomeScreenState extends State<HomeScreen> {
           border: Border(top: BorderSide(color: Color(0xFFF3F3F3), width: 1)),
         ),
         child: BottomAppBar(
+          color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               BottomNavItem(
-                icon: AssetImages.mapIcon,
+                icon: AssetImages.iconMap,
                 label: 'Mapa',
                 currentSelectedIndex: currentIndex,
                 index: 0,
                 onSelectItem: onSelectItem,
               ),
               BottomNavItem(
-                icon: AssetImages.diaryIcon,
+                icon: AssetImages.iconDiaries,
                 label: 'Diários',
                 currentSelectedIndex: currentIndex,
                 index: 1,
@@ -58,21 +58,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     constraints: BoxConstraints(
                       maxHeight: MediaQuery.of(context).size.height * 0.9,
                     ),
-                    builder: (context) => CreateDiaryModal(),
+                    builder: (context) => CreateDiaryBottomSheet(),
                   );
                 },
                 iconSize: 28,
                 icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
               ),
               BottomNavItem(
-                icon: AssetImages.exploreIcon,
+                icon: AssetImages.iconExplore,
                 label: 'Explorar',
                 currentSelectedIndex: currentIndex,
                 index: 2,
                 onSelectItem: onSelectItem,
               ),
               BottomNavItem(
-                icon: AssetImages.profileIcon,
+                icon: AssetImages.iconProfile,
                 label: 'Perfil',
                 currentSelectedIndex: currentIndex,
                 index: 3,

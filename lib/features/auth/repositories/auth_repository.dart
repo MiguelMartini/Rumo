@@ -19,17 +19,17 @@ class AuthRepository {
 
       final currentUser = FirebaseAuth.instance.currentUser;
 
-      if(currentUser == null){
-        AuthException(code: "Invalid-user");
+      if (currentUser == null) {
+        throw AuthException(code: "invalid-user");
       }
 
       await FirebaseFirestore.instance
-      .collection("users")
-      .doc(currentUser!.uid)
-      .set({"id": currentUser.uid, "email": email, "name": name});
+          .collection("users")
+          .doc(currentUser.uid)
+          .set({"id": currentUser.uid, "email": email, "name": name});
     } on FirebaseAuthException catch (error) {
       log(error.message ?? 'Error desconhecido');
-      
+
       throw AuthException(code: error.code);
     }
   }
@@ -57,9 +57,7 @@ class AuthRepository {
     await FirebaseAuth.instance.signOut();
   }
 
-  Future<void> sendPasswordResetEmail({
-    required String email,
-  }) async {
+  Future<void> sendPasswordResetEmail({required String email}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (error) {
@@ -71,18 +69,20 @@ class AuthRepository {
       throw AuthException(code: error.code, originalMessage: error.message);
     }
   }
+
+  User? getCurrentUser() {
+    return FirebaseAuth.instance.currentUser;
+  }
 }
 
 class AuthException implements Exception {
   final String code;
   final String? originalMessage;
-  AuthException({
-    required this.code, this.originalMessage
-  });
+  AuthException({required this.code, this.originalMessage});
 
   String getMessage() {
     switch (code) {
-       case "email-already-in-use":
+      case "email-already-in-use":
         return "Email já está em uso";
       case "invalid-email":
         return "Email não é válido";
